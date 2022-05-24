@@ -38,7 +38,7 @@ module spi_slave
 
   assign ce_n = oe_n && we_n;
 
-  always_ff @(posedge cs_n or posedge sck) begin
+  always @(posedge cs_n or posedge sck) begin
     if (cs_n) begin
       idx <= 0;
       rw <= 0;
@@ -46,7 +46,6 @@ module spi_slave
       addroe <= 0;
       datao <= 0;
       dataoe <= 0;
-      datahold <= 0;
       shiftreg <= 0;
       sdoe <= 0;
       oe_n <= 1;
@@ -60,7 +59,7 @@ module spi_slave
 
       if (idx == 7) begin
         rw <= curr[7];
-        addro[23:16] <= curr[7:0];
+        addro[17:16] <= curr[1:0];
       end else if (idx == 15) begin
         addro[15:8] <= curr[7:0];
       end else if (idx == 23) begin
@@ -97,13 +96,14 @@ module spi_slave
         idx <= idx + 1;
       end
 
-      shiftreg = curr[6:0];
+      shiftreg <= curr[6:0];
     end
   end
 
   always @(posedge cs_n or negedge sck) begin
     if (cs_n) begin
       we_n <= 1;
+      datahold <= 0;
     end else begin
       we_n <= 1;
       if (dataoe) begin

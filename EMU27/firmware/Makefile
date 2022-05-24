@@ -4,7 +4,7 @@ SV2V ?= /export/sv2v/bin/sv2v
 
 VERILOG_SOURCES :=
 VERILOG_SOURCES += $(PWD)/wrap_spi_slave.v
-VERILOG_SOURCES += $(PWD)/spi_slave.sv
+VERILOG_SOURCES += $(PWD)/spi_slave.v
 
 TOPLEVEL := wrap_spi_slave
 
